@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data
-public class Transaction {
+public class TransactionResponse {
 
 	@JsonProperty("AccountId")
 	private String accountId;
