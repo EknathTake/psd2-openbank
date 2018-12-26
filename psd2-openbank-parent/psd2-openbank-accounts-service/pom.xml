@@ -7,7 +7,8 @@
 		<artifactId>psd2-openbank-parent</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
+
 	<artifactId>psd2-openbank-accounts-service</artifactId>
-	<name>com.psd2.openbank-account-service</name>
-	
+	<name>psd2-openbank-account-service</name>
+
 </project>
