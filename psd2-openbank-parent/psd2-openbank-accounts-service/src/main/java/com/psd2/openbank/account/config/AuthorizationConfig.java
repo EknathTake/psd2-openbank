@@ -25,9 +25,9 @@ import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenCo
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFactory;
 
-import com.psd2.openbank.account.models.Account;
-import com.psd2.openbank.account.models.Role;
-import com.psd2.openbank.account.service.AccountService;
+import com.psd2.openbank.account.models.UserEntity;
+import com.psd2.openbank.account.models.RoleEntity;
+import com.psd2.openbank.account.service.UserService;
 import com.psd2.openbank.account.service.TokenBlackListService;
 
 @Configuration
@@ -44,7 +44,7 @@ public class AuthorizationConfig extends AuthorizationServerConfigurerAdapter {
 
 	@Bean
 	public UserDetailsService userDetailsService() {
-		return new AccountService();
+		return new UserService();
 	}
 
 	@Autowired
@@ -72,10 +72,10 @@ public class AuthorizationConfig extends AuthorizationServerConfigurerAdapter {
 		clients.inMemory()
 
 				.withClient("trusted-app").authorizedGrantTypes("client_credentials", "password", "refresh_token")
-				.authorities(Role.ROLE_TRUSTED_CLIENT.toString()).scopes("read", "write").resourceIds(resourceId)
+				.authorities(RoleEntity.ROLE_TRUSTED_CLIENT.toString()).scopes("read", "write").resourceIds(resourceId)
 				.accessTokenValiditySeconds(10).refreshTokenValiditySeconds(30000).secret("secret").and()
 				.withClient("register-app").authorizedGrantTypes("client_credentials")
-				.authorities(Role.ROLE_REGISTER.toString()).scopes("registerUser").accessTokenValiditySeconds(10)
+				.authorities(RoleEntity.ROLE_REGISTER.toString()).scopes("registerUser").accessTokenValiditySeconds(10)
 				.refreshTokenValiditySeconds(10).resourceIds(resourceId).secret("secret");
 	}
 
@@ -124,7 +124,7 @@ public class AuthorizationConfig extends AuthorizationServerConfigurerAdapter {
 		@Override
 		public OAuth2AccessToken createAccessToken(OAuth2Authentication authentication) throws AuthenticationException {
 			OAuth2AccessToken token = super.createAccessToken(authentication);
-			Account account = (Account) authentication.getPrincipal();
+			UserEntity account = (UserEntity) authentication.getPrincipal();
 			String jti = (String) token.getAdditionalInformation().get("jti");
 
 			blackListService.addToEnabledList(account.getId(), jti, token.getExpiration().getTime());

@@ -2,9 +2,9 @@ package com.psd2.openbank.account.service;
 
 import java.util.List;
 
-import com.psd2.openbank.account.controller.response.TransactionResponse;
+import com.psd2.openbank.transaction.controller.response.TransactionResponse;
 
-public interface AccountTransactionService {
+public interface TransactionService {
 
 	/**
 	 * Service which returns Specific Account related Transactions.

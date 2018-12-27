@@ -1,4 +1,4 @@
-package com.psd2.openbank.account.controller.response;
+package com.psd2.openbank.transaction.controller.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

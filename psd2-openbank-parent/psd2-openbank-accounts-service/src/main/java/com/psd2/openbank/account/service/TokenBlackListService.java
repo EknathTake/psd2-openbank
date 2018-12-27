@@ -1,6 +1,6 @@
 package com.psd2.openbank.account.service;
 
-import com.psd2.openbank.account.models.TokenBlackList;
+import com.psd2.openbank.account.models.TokenBlackListEntity;
 import com.psd2.openbank.account.repositories.TokenBlackListRepo;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,7 @@ public class TokenBlackListService {
     TokenBlackListRepo tokenBlackListRepo;
 
     public Boolean isBlackListed( String jti ) throws TokenNotFoundException {
-        Optional<TokenBlackList> token = tokenBlackListRepo.findByJti(jti);
+        Optional<TokenBlackListEntity> token = tokenBlackListRepo.findByJti(jti);
         if ( token.isPresent() ) {
             return token.get().isBlackListed();
         } else {
@@ -29,7 +29,7 @@ public class TokenBlackListService {
     @Async
     public void addToEnabledList(Long userId, String jti, Long expired ) {
         // clean all black listed tokens for user
-        List<TokenBlackList> list = tokenBlackListRepo.queryAllByUserIdAndIsBlackListedTrue(userId);
+        List<TokenBlackListEntity> list = tokenBlackListRepo.queryAllByUserIdAndIsBlackListedTrue(userId);
         if (list != null && list.size() > 0) {
             list.forEach(
                     token -> {
@@ -39,7 +39,7 @@ public class TokenBlackListService {
             );
         }
         // Add new token white listed
-        TokenBlackList tokenBlackList = new TokenBlackList(userId, jti, expired);
+        TokenBlackListEntity tokenBlackList = new TokenBlackListEntity(userId, jti, expired);
         tokenBlackList.setBlackListed(false);
         tokenBlackListRepo.save(tokenBlackList);
         tokenBlackListRepo.deleteAllByUserIdAndExpiresBefore(userId, new Date().getTime());
@@ -47,7 +47,7 @@ public class TokenBlackListService {
 
     @Async
     public void addToBlackList(String jti ) throws TokenNotFoundException {
-        Optional<TokenBlackList> tokenBlackList = tokenBlackListRepo.findByJti(jti);
+        Optional<TokenBlackListEntity> tokenBlackList = tokenBlackListRepo.findByJti(jti);
         if ( tokenBlackList.isPresent() ) {
             tokenBlackList.get().setBlackListed(true);
             tokenBlackListRepo.save(tokenBlackList.get());

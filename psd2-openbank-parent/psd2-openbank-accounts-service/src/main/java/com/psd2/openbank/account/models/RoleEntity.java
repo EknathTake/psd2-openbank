@@ -1,6 +1,6 @@
 package com.psd2.openbank.account.models;
 
-public enum Role {
+public enum RoleEntity {
     ROLE_USER,
     ROLE_ADMIN,
     ROLE_REGISTER,

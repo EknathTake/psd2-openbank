@@ -4,7 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity
-public class TokenBlackList {
+public class TokenBlackListEntity {
 
     @Id
     private String jti;
@@ -12,10 +12,10 @@ public class TokenBlackList {
     private Long expires;
     private Boolean isBlackListed;
 
-    public TokenBlackList() {
+    public TokenBlackListEntity() {
     }
 
-    public TokenBlackList(Long userId, String jti, Long expires) {
+    public TokenBlackListEntity(Long userId, String jti, Long expires) {
         this.jti = jti;
         this.userId = userId;
         this.expires = expires;

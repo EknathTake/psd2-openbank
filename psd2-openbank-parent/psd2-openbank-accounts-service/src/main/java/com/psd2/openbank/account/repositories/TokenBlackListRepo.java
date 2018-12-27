@@ -2,14 +2,14 @@ package com.psd2.openbank.account.repositories;
 
 import org.springframework.data.repository.Repository;
 
-import com.psd2.openbank.account.models.TokenBlackList;
+import com.psd2.openbank.account.models.TokenBlackListEntity;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface TokenBlackListRepo  extends Repository<TokenBlackList, Long> {
-   Optional<TokenBlackList> findByJti(String jti);
-   List<TokenBlackList> queryAllByUserIdAndIsBlackListedTrue(Long userId);
-   void save(TokenBlackList tokenBlackList);
-   List<TokenBlackList> deleteAllByUserIdAndExpiresBefore(Long userId, Long date);
+public interface TokenBlackListRepo  extends Repository<TokenBlackListEntity, Long> {
+   Optional<TokenBlackListEntity> findByJti(String jti);
+   List<TokenBlackListEntity> queryAllByUserIdAndIsBlackListedTrue(Long userId);
+   void save(TokenBlackListEntity tokenBlackList);
+   List<TokenBlackListEntity> deleteAllByUserIdAndExpiresBefore(Long userId, Long date);
 }

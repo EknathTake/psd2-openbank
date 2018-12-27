@@ -21,7 +21,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
-public class Account implements UserDetails {
+public class UserEntity implements UserDetails {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -35,10 +35,10 @@ public class Account implements UserDetails {
 	private String email;
 	@Enumerated(EnumType.STRING)
 	@ElementCollection(fetch = FetchType.EAGER)
-	private List<Role> roles;
+	private List<RoleEntity> roles;
 	private boolean accountNonExpired, accountNonLocked, credentialsNonExpired, enabled;
 
-	public Account() {
+	public UserEntity() {
 		this.accountNonExpired = true;
 		this.accountNonLocked = true;
 		this.credentialsNonExpired = true;
@@ -65,7 +65,7 @@ public class Account implements UserDetails {
 		return enabled;
 	}
 
-	public void grantAuthority(Role authority) {
+	public void grantAuthority(RoleEntity authority) {
 		if (roles == null)
 			roles = new ArrayList<>();
 		roles.add(authority);
@@ -78,11 +78,11 @@ public class Account implements UserDetails {
 		return authorities;
 	}
 
-	public List<Role> getRoles() {
+	public List<RoleEntity> getRoles() {
 		return roles;
 	}
 
-	public void setRoles(List<Role> roles) {
+	public void setRoles(List<RoleEntity> roles) {
 		this.roles = roles;
 	}
 

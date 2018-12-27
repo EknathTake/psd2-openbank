@@ -1,8 +1,8 @@
 package com.psd2.openbank.account;
 
-import com.psd2.openbank.account.models.Account;
-import com.psd2.openbank.account.models.Role;
-import com.psd2.openbank.account.service.AccountService;
+import com.psd2.openbank.account.models.UserEntity;
+import com.psd2.openbank.account.models.RoleEntity;
+import com.psd2.openbank.account.service.UserService;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
@@ -20,7 +20,7 @@ import java.util.Arrays;
 
 @SpringBootApplication
 @EnableAsync
-public class Psd2OpenBankApplication {
+public class Psd2OpenBankAccountApplication {
 
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder(){
@@ -28,7 +28,7 @@ public class Psd2OpenBankApplication {
 	}
 
 	public static void main(String[] args) {
-		SpringApplication.run(Psd2OpenBankApplication.class, args);
+		SpringApplication.run(Psd2OpenBankAccountApplication.class, args);
 	}
 
 	@Bean @Qualifier("mainDataSource")
@@ -42,19 +42,19 @@ public class Psd2OpenBankApplication {
 
 	@Bean
 	CommandLineRunner init(
-			AccountService accountService
+			UserService accountService
 	) {
 		return (evt) -> Arrays.asList(
 				"user,admin,john,robert,ana".split(",")).forEach(
 				username -> {
-					Account acct = new Account();
+					UserEntity acct = new UserEntity();
 					acct.setUsername(username);
 					acct.setPassword("password");
 					acct.setFirstName(username);
 					acct.setLastName("LastName");
-					acct.grantAuthority(Role.ROLE_USER);
+					acct.grantAuthority(RoleEntity.ROLE_USER);
 					if (username.equals("admin"))
-						acct.grantAuthority(Role.ROLE_ADMIN);
+						acct.grantAuthority(RoleEntity.ROLE_ADMIN);
 					accountService.registerUser(acct);
 				}
 		);

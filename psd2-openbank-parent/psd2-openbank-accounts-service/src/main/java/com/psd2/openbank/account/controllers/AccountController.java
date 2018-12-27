@@ -1,45 +1,40 @@
 package com.psd2.openbank.account.controllers;
 
-import java.security.Principal;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.psd2.openbank.account.models.Account;
+import com.psd2.openbank.account.request.AccountRequest;
+import com.psd2.openbank.account.response.AccountResponse;
 import com.psd2.openbank.account.service.AccountService;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @RestController
+@RequestMapping(path = "/api")
 public class AccountController {
 
 	@Autowired
 	private AccountService accountService;
 
-	@PreAuthorize("hasRole('REGISTER')")
-	@PostMapping("/api/account/register")
-	public ResponseEntity<Account> registerAccount(@RequestBody Account account) {
-		account = accountService.registerUser(account);
-		return new ResponseEntity<>(account, HttpStatus.CREATED);
-	}
+	/**
+	 * To make a call to the Create an account request API, you will need to know
+	 * the request information body, the account-specific access token, as granted
+	 * by the account holder. This access token can be retrieved via the APIs found
+	 * in the Authorization collection.
+	 * 
+	 * @return AccountResponse
+	 */
+	@PostMapping(path = "/retailbanking/v2.0/account-requests")
+	@ResponseStatus(code = HttpStatus.CREATED)
+	public AccountResponse createAccount(@RequestBody AccountRequest request) {
 
-	@PreAuthorize("isFullyAuthenticated()")
-	@DeleteMapping("/api/account/remove")
-	public ResponseEntity<GeneralController.RestMsg> removeAccount(Principal principal) {
-		boolean isDeleted = accountService.removeAuthenticatedAccount();
-		if (isDeleted) {
-			return new ResponseEntity<>(
-					new GeneralController.RestMsg(String.format("[%s] removed.", principal.getName())), HttpStatus.OK);
-		} else {
-			return new ResponseEntity<>(
-					new GeneralController.RestMsg(
-							String.format("An error ocurred while delete [%s]", principal.getName())),
-					HttpStatus.BAD_REQUEST);
-		}
+		return accountService.createAccount(request);
 	}
 
 }
