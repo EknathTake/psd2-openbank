@@ -1,4 +1,4 @@
-package com.psd2.openbank.account.service.impl;
+package com.psd2.openbank.account.service;
 
 import java.util.List;
 
