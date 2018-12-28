@@ -3,10 +3,12 @@ package com.psd2.openbank.account.service;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.psd2.openbank.account.exception.InvalidDatesForTransaction;
 import com.psd2.openbank.account.models.AccountEntity;
 import com.psd2.openbank.account.models.AccountPermissions;
 import com.psd2.openbank.account.repositories.AccountRepository;
@@ -21,7 +23,11 @@ public class AccountServiceImpl implements AccountService {
 	private AccountRepository accountRepository;
 
 	@Override
-	public AccountResponse createAccount(AccountRequest request) {
+	public AccountResponse createAccount(AccountRequest request) throws InvalidDatesForTransaction {
+
+		if (getDifferenceDays(request.getTransactionFromDateTime(), request.getTransactionToDateTime()) > 90)
+			throw new InvalidDatesForTransaction(400,
+					"The transactionFromDateTime and transactionToDateTime must not be more than 90 days.");
 
 		AccountEntity entity = AccountEntity.builder().expirationDateTime(request.getExpirationDateTime())
 				.transactionFromDateTime(request.getTransactionFromDateTime())
@@ -39,6 +45,18 @@ public class AccountServiceImpl implements AccountService {
 				.transactionToDateTime(savedEntity.getTransactionToDateTime())
 				.status(AccountStatus.AWAITING_AUTHORISATION)
 				.permissions(mapAccountPermissionModelToResponse(savedEntity.getPermissions())).build();
+	}
+
+	/**
+	 * get duration between two dates
+	 * 
+	 * @param d1
+	 * @param d2
+	 * @return
+	 */
+	private long getDifferenceDays(Date d1, Date d2) {
+		long diff = d2.getTime() - d1.getTime();
+		return TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
 	}
 
 	/**

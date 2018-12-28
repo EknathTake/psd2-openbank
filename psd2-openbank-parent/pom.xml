@@ -23,6 +23,7 @@
 
 	<modules>
 		<module>psd2-openbank-accounts-service</module>
+		<module>psd2-openbank-account</module>
 	</modules>
 	<dependencies>
 		<dependency>

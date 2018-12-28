@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.psd2.openbank.account.exception.InvalidDatesForTransaction;
 import com.psd2.openbank.account.request.AccountRequest;
 import com.psd2.openbank.account.response.AccountResponse;
 import com.psd2.openbank.account.service.AccountService;
@@ -33,10 +34,11 @@ public class AccountController {
 	 * in the Authorization collection.
 	 * 
 	 * @return AccountResponse
+	 * @throws InvalidDatesForTransaction
 	 */
 	@PostMapping(path = "/retailbanking/v2.0/account-requests", consumes = "application/json")
 	@ResponseStatus(code = HttpStatus.CREATED)
-	public AccountResponse createAccount(@Valid @RequestBody AccountRequest request) {
+	public AccountResponse createAccount(@Valid @RequestBody AccountRequest request) throws InvalidDatesForTransaction {
 
 		AccountResponse createAccount = accountService.createAccount(request);
 		log.info("createAccount: {}", createAccount);
