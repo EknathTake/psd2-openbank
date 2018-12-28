@@ -2,9 +2,12 @@ package com.psd2.openbank.account.response;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.Builder;
 import lombok.Data;
@@ -33,17 +36,18 @@ public class AccountResponse implements Serializable {
 	 * in responses must include the timezone. An example is below:
 	 * 2017-04-05T10:43:07+00:00
 	 */
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date creationDateTime;
 
 	/**
 	 * Specifies the status of the account request resource.
 	 */
-	private AccountStatus[] status;
+	private AccountStatus status;
 
 	/**
 	 * Permissions
 	 */
-	private AccountPermissions[] permissions;
+	private Set<AccountPermissions> permissions;
 
 	/**
 	 * Specified date and time the permissions will expire. If this is not
@@ -52,6 +56,7 @@ public class AccountResponse implements Serializable {
 	 * responses must include the timezone. An example is below:
 	 * 2017-04-05T10:43:07+00:00
 	 */
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date expirationDateTime;
 
 	/**
@@ -61,6 +66,7 @@ public class AccountResponse implements Serializable {
 	 * represented in ISO 8601 date-time format. All date-time fields in responses
 	 * must include the timezone. An example is below: 2017-04-05T10:43:07+00:00
 	 */
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date transactionFromDateTime;
 
 	/**
@@ -70,6 +76,7 @@ public class AccountResponse implements Serializable {
 	 * in ISO 8601 date-time format. All date-time fields in responses must include
 	 * the timezone. An example is below: 2017-04-05T10:43:07+00:00
 	 */
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date transactionToDateTime;
 
 }

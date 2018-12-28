@@ -2,8 +2,7 @@ package com.psd2.openbank.account.request;
 
 import java.io.Serializable;
 import java.util.Date;
-
-import com.psd2.openbank.account.response.AccountPermissions;
+import java.util.Set;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -27,12 +26,12 @@ public class AccountRequest implements Serializable {
 	 */
 	@Getter(AccessLevel.NONE)
 	@Setter(AccessLevel.NONE)
-	private static final long serialVersionUID = -8068538258299540228L;
+	private static final long serialVersionUID = 6791168296443998837L;
 
 	/**
 	 * Permissions
 	 */
-	private AccountPermissions[] permissions;
+	private Set<String> permissions;
 
 	/**
 	 * Specified date and time the permissions will expire. If this is not

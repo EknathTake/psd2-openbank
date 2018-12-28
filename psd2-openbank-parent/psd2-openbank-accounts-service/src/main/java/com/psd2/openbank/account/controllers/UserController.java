@@ -2,7 +2,8 @@ package com.psd2.openbank.account.controllers;
 
 import java.security.Principal;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.inject.Inject;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -17,7 +18,7 @@ import com.psd2.openbank.account.service.UserService;
 @RestController
 public class UserController {
 
-	@Autowired
+	@Inject
 	private UserService accountService;
 
 	/**

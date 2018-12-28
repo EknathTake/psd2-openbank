@@ -47,16 +47,7 @@ public class AccountEntity implements Serializable {
 	/**
 	 * Specifies the status of the account request resource.
 	 */
-
-	/*
-	 * @ElementCollection(targetClass = AccountStatus.class)
-	 * 
-	 * @CollectionTable(name = "T_STATUS", joinColumns = @JoinColumn(name =
-	 * "accountRequestId"))
-	 */
-	@Enumerated(EnumType.STRING)
-	@OneToMany(mappedBy = "account")
-	private Set<AccountStatus> status;
+	private AccountStatus status;
 
 	/**
 	 * Permissions

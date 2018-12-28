@@ -21,8 +21,14 @@
 		<java.version>1.8</java.version>
 	</properties>
 
-	
 	<modules>
 		<module>psd2-openbank-accounts-service</module>
 	</modules>
+	<dependencies>
+		<dependency>
+			<groupId>javax.inject</groupId>
+			<artifactId>javax.inject</artifactId>
+			<version>1</version>
+		</dependency>
+	</dependencies>
 </project>

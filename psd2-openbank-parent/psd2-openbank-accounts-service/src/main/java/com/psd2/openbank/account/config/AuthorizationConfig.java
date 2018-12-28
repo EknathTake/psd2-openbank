@@ -25,16 +25,17 @@ import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenCo
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFactory;
 
-import com.psd2.openbank.account.models.UserEntity;
 import com.psd2.openbank.account.models.RoleEntity;
-import com.psd2.openbank.account.service.UserService;
+import com.psd2.openbank.account.models.UserEntity;
 import com.psd2.openbank.account.service.TokenBlackListService;
+import com.psd2.openbank.account.service.UserService;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Configuration
 @EnableAuthorizationServer
 public class AuthorizationConfig extends AuthorizationServerConfigurerAdapter {
-
-	private Logger logger = LoggerFactory.getLogger(AuthorizationConfig.class);
 
 	private int accessTokenValiditySeconds = 10000;
 	private int refreshTokenValiditySeconds = 30000;

@@ -3,6 +3,7 @@ package com.psd2.openbank.account.service;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -11,14 +12,15 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.psd2.openbank.account.models.UserEntity;
 import com.psd2.openbank.account.models.RoleEntity;
+import com.psd2.openbank.account.models.UserEntity;
 import com.psd2.openbank.account.repositories.UserRepo;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
+@Primary
 public class UserService implements UserDetailsService {
 
 	@Autowired
