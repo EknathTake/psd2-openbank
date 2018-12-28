@@ -1,12 +1,13 @@
-package com.psd2.openbank.account.controllers;
+package com.psd2.openbank.account.rest.controllers;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.validation.Valid;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -35,7 +36,7 @@ public class AccountController {
 	 */
 	@PostMapping(path = "/retailbanking/v2.0/account-requests", consumes = "application/json")
 	@ResponseStatus(code = HttpStatus.CREATED)
-	public @ResponseBody AccountResponse createAccount(@RequestBody AccountRequest request) {
+	public AccountResponse createAccount(@Valid @RequestBody AccountRequest request) {
 
 		AccountResponse createAccount = accountService.createAccount(request);
 		log.info("createAccount: {}", createAccount);

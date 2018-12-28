@@ -1,4 +1,4 @@
-package com.psd2.openbank.account.controllers;
+package com.psd2.openbank.account.rest.controllers;
 
 import java.security.Principal;
 

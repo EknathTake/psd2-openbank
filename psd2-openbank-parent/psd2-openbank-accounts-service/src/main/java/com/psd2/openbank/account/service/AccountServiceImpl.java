@@ -2,9 +2,7 @@ package com.psd2.openbank.account.service;
 
 import java.util.Date;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,8 +27,7 @@ public class AccountServiceImpl implements AccountService {
 				.transactionFromDateTime(request.getTransactionFromDateTime())
 				.transactionToDateTime(request.getTransactionToDateTime()).creationDateTime(new Date())
 				.expirationDateTime(request.getExpirationDateTime())
-				.permissions(request.getPermissions().stream().filter(Objects::nonNull).map(AccountPermissions::valueOf)
-						.collect(Collectors.toSet()))
+				.permissions(mapPermissionRequestToModel(request.getPermissions()))
 				.status(com.psd2.openbank.account.models.AccountStatus.valueOf("AWAITING_AUTHORISATION")).build();
 
 		AccountEntity savedEntity = accountRepository.save(entity);
@@ -41,10 +38,97 @@ public class AccountServiceImpl implements AccountService {
 				.transactionFromDateTime(savedEntity.getTransactionFromDateTime())
 				.transactionToDateTime(savedEntity.getTransactionToDateTime())
 				.status(AccountStatus.AWAITING_AUTHORISATION)
-				.permissions(accountPermissionMapper(savedEntity.getPermissions())).build();
+				.permissions(mapAccountPermissionModelToResponse(savedEntity.getPermissions())).build();
 	}
 
-	private Set<com.psd2.openbank.account.response.AccountPermissions> accountPermissionMapper(
+	/**
+	 * request to model mapper
+	 * 
+	 * @param permissionsRequest
+	 * @return
+	 */
+	private Set<AccountPermissions> mapPermissionRequestToModel(Set<String> permissionsRequest) {
+		Set<AccountPermissions> permissionsModel = new HashSet<>();
+		for (String string : permissionsRequest) {
+			switch (string) {
+			case "ReadAccountsBasic":
+				permissionsModel.add(AccountPermissions.READ_ACCOUNT_BASIC);
+				break;
+			case "ReadAccountsDetail":
+				permissionsModel.add(AccountPermissions.READ_ACCOUNT_DETAIL);
+				break;
+			case "ReadBalances":
+				permissionsModel.add(AccountPermissions.READ_BALANCE);
+				break;
+			case "ReadBeneficiariesBasic":
+				permissionsModel.add(AccountPermissions.READ_BENEFICIARIES_BASIC);
+				break;
+			case "ReadBeneficiariesDetail":
+				permissionsModel.add(AccountPermissions.READ_BENEFICIARIES_DETAIL);
+				break;
+			case "ReadDirectDebits":
+				permissionsModel.add(AccountPermissions.READ_DIRECT_DEBITS);
+				break;
+			case "ReadOffers":
+				permissionsModel.add(AccountPermissions.READ_OFFERS);
+				break;
+			case "ReadPAN":
+				permissionsModel.add(AccountPermissions.READ_PAN);
+				break;
+			case "ReadParty":
+				permissionsModel.add(AccountPermissions.READ_PARTY);
+				break;
+			case "ReadPartyPSU":
+				permissionsModel.add(AccountPermissions.READ_PARTY_PSU);
+				break;
+			case "ReadProducts":
+				permissionsModel.add(AccountPermissions.READ_PRODUCTS);
+				break;
+			case "ReadScheduledPaymentsBasic":
+				permissionsModel.add(AccountPermissions.READ_SCHEDULED_PAYMENTS_BASIC);
+				break;
+			case "ReadScheduledPaymentsDetail":
+				permissionsModel.add(AccountPermissions.READ_SCHEDULED_PAYMENTS_DETAIL);
+				break;
+			case "ReadStandingOrdersBasic":
+				permissionsModel.add(AccountPermissions.READ_STANDING_ORDERS_BASIC);
+				break;
+			case "ReadStandingOrdersDetail":
+				permissionsModel.add(AccountPermissions.READ_STANDING_ORDERS_DETAIL);
+				break;
+			case "ReadStatementsBasic":
+				permissionsModel.add(AccountPermissions.READ_STATEMENTS_BASIC);
+				break;
+			case "ReadStatementsDetail":
+				permissionsModel.add(AccountPermissions.READ_STATEMENTS_DETAIL);
+				break;
+			case "ReadTransactionsBasic":
+				permissionsModel.add(AccountPermissions.READ_TRANSACTIONS_BASIC);
+				break;
+			case "ReadTransactionsCredits":
+				permissionsModel.add(AccountPermissions.READ_TRANSACTIONS_CREDITS);
+				break;
+			case "ReadTransactionsDebits":
+				permissionsModel.add(AccountPermissions.READ_TRANSACTIONS_DEBITS);
+				break;
+			case "ReadTransactionsDetail":
+				permissionsModel.add(AccountPermissions.READ_TRANSACTIONS_DETAILS);
+				break;
+			default:
+				break;
+			}
+
+		}
+		return permissionsModel;
+	}
+
+	/**
+	 * model to response mapper
+	 * 
+	 * @param permissions
+	 * @return
+	 */
+	private Set<com.psd2.openbank.account.response.AccountPermissions> mapAccountPermissionModelToResponse(
 			Set<AccountPermissions> permissions) {
 		Set<com.psd2.openbank.account.response.AccountPermissions> permissionsResponse = new HashSet<>();
 		for (AccountPermissions accountPermissions : permissions) {

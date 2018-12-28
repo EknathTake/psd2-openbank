@@ -4,11 +4,12 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 
-import lombok.AccessLevel;
-import lombok.Builder;
+import javax.validation.constraints.Future;
+import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 import lombok.ToString;
 
 /**
@@ -17,20 +18,18 @@ import lombok.ToString;
  *
  */
 @Data
-@Builder
 @ToString(exclude = { "serialVersionUID" })
 public class AccountRequest implements Serializable {
 
 	/**
-	 * Generated serial version Id
+	 * 
 	 */
-	@Getter(AccessLevel.NONE)
-	@Setter(AccessLevel.NONE)
-	private static final long serialVersionUID = 6791168296443998837L;
+	private static final long serialVersionUID = -2266403128592211812L;
 
 	/**
 	 * Permissions
 	 */
+
 	private Set<String> permissions;
 
 	/**
@@ -40,6 +39,9 @@ public class AccountRequest implements Serializable {
 	 * responses must include the timezone. An example is below:
 	 * 2017-04-05T10:43:07+00:00
 	 */
+	@NotNull(message = "The expirationDateTime must not be null.")
+	@Future(message = "The expirationDateTime must be in future in format yyyy-MM-dd HH:mm:ss.")
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date expirationDateTime;
 
 	/**
@@ -49,6 +51,7 @@ public class AccountRequest implements Serializable {
 	 * represented in ISO 8601 date-time format. All date-time fields in responses
 	 * must include the timezone. An example is below: 2017-04-05T10:43:07+00:00
 	 */
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date transactionFromDateTime;
 
 	/**
@@ -58,5 +61,7 @@ public class AccountRequest implements Serializable {
 	 * in ISO 8601 date-time format. All date-time fields in responses must include
 	 * the timezone. An example is below: 2017-04-05T10:43:07+00:00
 	 */
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date transactionToDateTime;
+
 }

@@ -15,7 +15,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
-@EnableWebSecurity(debug = true)
+@EnableWebSecurity
 @Order(SecurityProperties.BASIC_AUTH_ORDER - 2)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
