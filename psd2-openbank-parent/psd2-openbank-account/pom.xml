@@ -11,12 +11,12 @@
 	<packaging>pom</packaging>
 	<name>psd2-openbank-account</name>
 	<modules>
-		<module>psd2-openbank-account-service</module>
-		<module>psd2-openbank-account-controller</module>
 		<module>psd2-openbank-account-domain</module>
 		<module>psd2-openbank-account-dao</module>
+		<module>psd2-openbank-account-service</module>
+		<module>psd2-openbank-account-controller</module>
 	</modules>
-	<properties>
+	<!-- <properties>
 		<spring-cloud.version>Dalston.SR1</spring-cloud.version>
 	</properties>
 	<dependencies>
@@ -56,8 +56,8 @@
 			<version>0.8.0</version>
 		</dependency>
 
-		<!-- <dependency> <groupId>mysql</groupId> <artifactId>mysql-connector-java</artifactId> 
-			<scope>runtime</scope> </dependency> -->
+		<dependency> <groupId>mysql</groupId> <artifactId>mysql-connector-java</artifactId> 
+			<scope>runtime</scope> </dependency>
 
 		<dependency>
 			<groupId>org.projectlombok</groupId>
@@ -95,8 +95,8 @@
 		</dependency>
 	</dependencies>
 
-	<!-- <build> <plugins> <plugin> <groupId>org.springframework.boot</groupId> 
-		<artifactId>spring-boot-maven-plugin</artifactId> </plugin> </plugins> </build> -->
+	<build> <plugins> <plugin> <groupId>org.springframework.boot</groupId> 
+		<artifactId>spring-boot-maven-plugin</artifactId> </plugin> </plugins> </build>
 
 	<dependencyManagement>
 		<dependencies>
@@ -118,5 +118,5 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
-	</build>
+	</build> -->
 </project>
