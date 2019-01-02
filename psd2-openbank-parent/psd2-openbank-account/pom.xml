@@ -11,9 +11,6 @@
 	<packaging>pom</packaging>
 	<name>psd2-openbank-account</name>
 	<modules>
-		<module>psd2-openbank-account-domain</module>
-		<module>psd2-openbank-account-dao</module>
-		<module>psd2-openbank-account-service</module>
 		<module>psd2-openbank-account-controller</module>
 	</modules>
 	<!-- <properties>

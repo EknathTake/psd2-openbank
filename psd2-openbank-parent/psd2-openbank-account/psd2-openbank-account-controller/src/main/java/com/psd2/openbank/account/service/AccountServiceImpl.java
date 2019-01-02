@@ -8,13 +8,13 @@ import java.util.concurrent.TimeUnit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.psd2.openbank.account.controller.request.AccountRequest;
+import com.psd2.openbank.account.controller.response.AccountResponse;
+import com.psd2.openbank.account.controller.response.AccountStatus;
 import com.psd2.openbank.account.entity.AccountEntity;
 import com.psd2.openbank.account.entity.AccountPermissions;
 import com.psd2.openbank.account.exception.InvalidDatesForTransaction;
 import com.psd2.openbank.account.repositories.AccountRepository;
-import com.psd2.openbank.account.service.request.AccountRequest;
-import com.psd2.openbank.account.service.response.AccountResponse;
-import com.psd2.openbank.account.service.response.AccountStatus;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -150,88 +150,89 @@ public class AccountServiceImpl implements AccountService {
 	 * @param permissions
 	 * @return
 	 */
-	private Set<com.psd2.openbank.account.service.response.AccountPermissions> mapAccountPermissionModelToResponse(
+	private Set<com.psd2.openbank.account.controller.response.AccountPermissions> mapAccountPermissionModelToResponse(
 			Set<AccountPermissions> permissions) {
-		Set<com.psd2.openbank.account.service.response.AccountPermissions> permissionsResponse = new HashSet<>();
+		Set<com.psd2.openbank.account.controller.response.AccountPermissions> permissionsResponse = new HashSet<>();
 		for (AccountPermissions accountPermissions : permissions) {
 			switch (accountPermissions) {
 			case READ_ACCOUNT_BASIC:
 				permissionsResponse
-						.add(com.psd2.openbank.account.service.response.AccountPermissions.READ_ACCOUNT_BASIC);
+						.add(com.psd2.openbank.account.controller.response.AccountPermissions.READ_ACCOUNT_BASIC);
 				break;
 			case READ_ACCOUNT_DETAIL:
 				permissionsResponse
-						.add(com.psd2.openbank.account.service.response.AccountPermissions.READ_ACCOUNT_DETAIL);
+						.add(com.psd2.openbank.account.controller.response.AccountPermissions.READ_ACCOUNT_DETAIL);
 				break;
 			case READ_BALANCE:
-				permissionsResponse.add(com.psd2.openbank.account.service.response.AccountPermissions.READ_BALANCE);
+				permissionsResponse.add(com.psd2.openbank.account.controller.response.AccountPermissions.READ_BALANCE);
 				break;
 			case READ_BENEFICIARIES_BASIC:
 				permissionsResponse
-						.add(com.psd2.openbank.account.service.response.AccountPermissions.READ_BENEFICIARIES_BASIC);
+						.add(com.psd2.openbank.account.controller.response.AccountPermissions.READ_BENEFICIARIES_BASIC);
 				break;
 			case READ_BENEFICIARIES_DETAIL:
-				permissionsResponse
-						.add(com.psd2.openbank.account.service.response.AccountPermissions.READ_BENEFICIARIES_DETAIL);
+				permissionsResponse.add(
+						com.psd2.openbank.account.controller.response.AccountPermissions.READ_BENEFICIARIES_DETAIL);
 				break;
 			case READ_DIRECT_DEBITS:
 				permissionsResponse
-						.add(com.psd2.openbank.account.service.response.AccountPermissions.READ_DIRECT_DEBITS);
+						.add(com.psd2.openbank.account.controller.response.AccountPermissions.READ_DIRECT_DEBITS);
 				break;
 			case READ_OFFERS:
-				permissionsResponse.add(com.psd2.openbank.account.service.response.AccountPermissions.READ_OFFERS);
+				permissionsResponse.add(com.psd2.openbank.account.controller.response.AccountPermissions.READ_OFFERS);
 				break;
 			case READ_PAN:
-				permissionsResponse.add(com.psd2.openbank.account.service.response.AccountPermissions.READ_PAN);
+				permissionsResponse.add(com.psd2.openbank.account.controller.response.AccountPermissions.READ_PAN);
 				break;
 			case READ_PARTY:
-				permissionsResponse.add(com.psd2.openbank.account.service.response.AccountPermissions.READ_PARTY);
+				permissionsResponse.add(com.psd2.openbank.account.controller.response.AccountPermissions.READ_PARTY);
 				break;
 			case READ_PARTY_PSU:
-				permissionsResponse.add(com.psd2.openbank.account.service.response.AccountPermissions.READ_PARTY_PSU);
+				permissionsResponse
+						.add(com.psd2.openbank.account.controller.response.AccountPermissions.READ_PARTY_PSU);
 				break;
 			case READ_PRODUCTS:
-				permissionsResponse.add(com.psd2.openbank.account.service.response.AccountPermissions.READ_PRODUCTS);
+				permissionsResponse.add(com.psd2.openbank.account.controller.response.AccountPermissions.READ_PRODUCTS);
 				break;
 			case READ_SCHEDULED_PAYMENTS_BASIC:
 				permissionsResponse.add(
-						com.psd2.openbank.account.service.response.AccountPermissions.READ_SCHEDULED_PAYMENTS_BASIC);
+						com.psd2.openbank.account.controller.response.AccountPermissions.READ_SCHEDULED_PAYMENTS_BASIC);
 				break;
 			case READ_SCHEDULED_PAYMENTS_DETAIL:
 				permissionsResponse.add(
-						com.psd2.openbank.account.service.response.AccountPermissions.READ_SCHEDULED_PAYMENTS_DETAIL);
+						com.psd2.openbank.account.controller.response.AccountPermissions.READ_SCHEDULED_PAYMENTS_DETAIL);
 				break;
 			case READ_STANDING_ORDERS_BASIC:
-				permissionsResponse
-						.add(com.psd2.openbank.account.service.response.AccountPermissions.READ_STANDING_ORDERS_BASIC);
+				permissionsResponse.add(
+						com.psd2.openbank.account.controller.response.AccountPermissions.READ_STANDING_ORDERS_BASIC);
 				break;
 			case READ_STANDING_ORDERS_DETAIL:
-				permissionsResponse
-						.add(com.psd2.openbank.account.service.response.AccountPermissions.READ_STANDING_ORDERS_DETAIL);
+				permissionsResponse.add(
+						com.psd2.openbank.account.controller.response.AccountPermissions.READ_STANDING_ORDERS_DETAIL);
 				break;
 			case READ_STATEMENTS_BASIC:
 				permissionsResponse
-						.add(com.psd2.openbank.account.service.response.AccountPermissions.READ_STATEMENTS_BASIC);
+						.add(com.psd2.openbank.account.controller.response.AccountPermissions.READ_STATEMENTS_BASIC);
 				break;
 			case READ_STATEMENTS_DETAIL:
 				permissionsResponse
-						.add(com.psd2.openbank.account.service.response.AccountPermissions.READ_STATEMENTS_DETAIL);
+						.add(com.psd2.openbank.account.controller.response.AccountPermissions.READ_STATEMENTS_DETAIL);
 				break;
 			case READ_TRANSACTIONS_BASIC:
 				permissionsResponse
-						.add(com.psd2.openbank.account.service.response.AccountPermissions.READ_TRANSACTIONS_BASIC);
+						.add(com.psd2.openbank.account.controller.response.AccountPermissions.READ_TRANSACTIONS_BASIC);
 				break;
 			case READ_TRANSACTIONS_CREDITS:
-				permissionsResponse
-						.add(com.psd2.openbank.account.service.response.AccountPermissions.READ_TRANSACTIONS_CREDITS);
+				permissionsResponse.add(
+						com.psd2.openbank.account.controller.response.AccountPermissions.READ_TRANSACTIONS_CREDITS);
 				break;
 			case READ_TRANSACTIONS_DEBITS:
 				permissionsResponse
-						.add(com.psd2.openbank.account.service.response.AccountPermissions.READ_TRANSACTIONS_DEBITS);
+						.add(com.psd2.openbank.account.controller.response.AccountPermissions.READ_TRANSACTIONS_DEBITS);
 				break;
 			case READ_TRANSACTIONS_DETAILS:
-				permissionsResponse
-						.add(com.psd2.openbank.account.service.response.AccountPermissions.READ_TRANSACTIONS_DETAILS);
+				permissionsResponse.add(
+						com.psd2.openbank.account.controller.response.AccountPermissions.READ_TRANSACTIONS_DETAILS);
 				break;
 
 			default:

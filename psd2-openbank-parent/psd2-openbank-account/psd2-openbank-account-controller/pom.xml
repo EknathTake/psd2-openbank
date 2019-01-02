@@ -7,8 +7,8 @@
 		<artifactId>psd2-openbank-account</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<artifactId>psd2-openbank-account-controller</artifactId>
-	<name>psd2-openbank-account-controller</name>
+	<artifactId>psd2-openbank-account-service</artifactId>
+	<name>psd2-openbank-account-service</name>
 	<properties>
 		<!-- The main class to start by executing java -jar -->
 		<start-class>com.psd2.openbank.account.Psd2OpenBankAccountApplication</start-class>
