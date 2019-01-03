@@ -42,7 +42,7 @@ public enum AccountPermissions {
 	private Long id;
 
 	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "ACCOUNT_ID")
+	@JoinColumn(name = "ACCOUNT_ID", nullable = false)
 	private AccountEntity account;
 
 	AccountPermissions(String permission) {

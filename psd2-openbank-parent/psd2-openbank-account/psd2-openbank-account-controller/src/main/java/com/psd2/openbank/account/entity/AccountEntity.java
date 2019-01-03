@@ -83,4 +83,60 @@ public class AccountEntity implements Serializable {
 	 */
 	private Date transactionToDateTime;
 
+	public Long getAccountRequestId() {
+		return accountRequestId;
+	}
+
+	public void setAccountRequestId(Long accountRequestId) {
+		this.accountRequestId = accountRequestId;
+	}
+
+	public Date getCreationDateTime() {
+		return creationDateTime;
+	}
+
+	public void setCreationDateTime(Date creationDateTime) {
+		this.creationDateTime = creationDateTime;
+	}
+
+	public AccountStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(AccountStatus status) {
+		this.status = status;
+	}
+
+	public Set<AccountPermissions> getPermissions() {
+		return permissions;
+	}
+
+	public void setPermissions(Set<AccountPermissions> permissions) {
+		this.permissions = permissions;
+	}
+
+	public Date getExpirationDateTime() {
+		return expirationDateTime;
+	}
+
+	public void setExpirationDateTime(Date expirationDateTime) {
+		this.expirationDateTime = expirationDateTime;
+	}
+
+	public Date getTransactionFromDateTime() {
+		return transactionFromDateTime;
+	}
+
+	public void setTransactionFromDateTime(Date transactionFromDateTime) {
+		this.transactionFromDateTime = transactionFromDateTime;
+	}
+
+	public Date getTransactionToDateTime() {
+		return transactionToDateTime;
+	}
+
+	public void setTransactionToDateTime(Date transactionToDateTime) {
+		this.transactionToDateTime = transactionToDateTime;
+	}
+
 }

@@ -40,6 +40,21 @@ public class AuthorizationConfig extends AuthorizationServerConfigurerAdapter {
 	@Value("${security.oauth2.resource.id}")
 	private String resourceId;
 
+	@Value("${config.oauth2.clientSecret}")
+	private String clientSecret;
+
+	@Value("${config.oauth2.clientID}")
+	private String clientID;
+
+	@Value("${config.oauth2.scope.payment}")
+	private String paymentScope;
+
+	@Value("${config.oauth2.scope.account}")
+	private String accountScope;
+
+	@Value("${security.oauth2.client.grantType}")
+	private String grantType;
+
 	@Bean
 	public UserDetailsService userDetailsService() {
 		return new UserService();
@@ -67,14 +82,12 @@ public class AuthorizationConfig extends AuthorizationServerConfigurerAdapter {
 
 	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-		clients.inMemory()
-
-				.withClient("trusted-app").authorizedGrantTypes("client_credentials", "password", "refresh_token")
-				.authorities(RoleEntity.ROLE_TRUSTED_CLIENT.toString()).scopes("read", "write").resourceIds(resourceId)
-				.accessTokenValiditySeconds(10).refreshTokenValiditySeconds(30000).secret("secret").and()
-				.withClient("register-app").authorizedGrantTypes("client_credentials")
+		clients.inMemory().withClient(clientID).authorizedGrantTypes(grantType, "password", "refresh_token")
+				.authorities(RoleEntity.ROLE_TRUSTED_CLIENT.toString()).scopes(paymentScope, accountScope)
+				.resourceIds(resourceId).accessTokenValiditySeconds(300).refreshTokenValiditySeconds(30000)
+				.secret(clientSecret).and().withClient("register-app").authorizedGrantTypes(grantType)
 				.authorities(RoleEntity.ROLE_REGISTER.toString()).scopes("registerUser").accessTokenValiditySeconds(10)
-				.refreshTokenValiditySeconds(10).resourceIds(resourceId).secret("secret");
+				.refreshTokenValiditySeconds(10).resourceIds(resourceId).secret(clientSecret);
 	}
 
 	@Bean

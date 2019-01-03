@@ -36,8 +36,7 @@ public class AccountRequest implements Serializable {
 	 * Specified date and time the permissions will expire. If this is not
 	 * populated, the permissions will be open ended. All dates in the JSON payloads
 	 * are represented in ISO 8601 date-time format. All date-time fields in
-	 * responses must include the timezone. An example is below:
-	 * 2017-04-05T10:43:07+00:00
+	 * responses must include the timezone. An example is below: 2017-04-05 10:43:07
 	 */
 	@NotNull(message = "The expirationDateTime must not be null.")
 	@Future(message = "The expirationDateTime must be in future in format yyyy-MM-dd HH:mm:ss.")
@@ -49,7 +48,7 @@ public class AccountRequest implements Serializable {
 	 * not populated, the start date will be open ended, and data will be returned
 	 * from the earliest available transaction. All dates in the JSON payloads are
 	 * represented in ISO 8601 date-time format. All date-time fields in responses
-	 * must include the timezone. An example is below: 2017-04-05T10:43:07+00:00
+	 * must include the timezone. An example is below: 2017-04-05 10:43:07
 	 */
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date transactionFromDateTime;
@@ -59,9 +58,41 @@ public class AccountRequest implements Serializable {
 	 * populated, the end date will be open ended, and data will be returned to the
 	 * latest available transaction. All dates in the JSON payloads are represented
 	 * in ISO 8601 date-time format. All date-time fields in responses must include
-	 * the timezone. An example is below: 2017-04-05T10:43:07+00:00
+	 * the timezone. An example is below: 2017-04-05 10:43:07
 	 */
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date transactionToDateTime;
+
+	public Set<String> getPermissions() {
+		return permissions;
+	}
+
+	public void setPermissions(Set<String> permissions) {
+		this.permissions = permissions;
+	}
+
+	public Date getExpirationDateTime() {
+		return expirationDateTime;
+	}
+
+	public void setExpirationDateTime(Date expirationDateTime) {
+		this.expirationDateTime = expirationDateTime;
+	}
+
+	public Date getTransactionFromDateTime() {
+		return transactionFromDateTime;
+	}
+
+	public void setTransactionFromDateTime(Date transactionFromDateTime) {
+		this.transactionFromDateTime = transactionFromDateTime;
+	}
+
+	public Date getTransactionToDateTime() {
+		return transactionToDateTime;
+	}
+
+	public void setTransactionToDateTime(Date transactionToDateTime) {
+		this.transactionToDateTime = transactionToDateTime;
+	}
 
 }

@@ -32,23 +32,27 @@ public class AccountServiceImpl implements AccountService {
 			throw new InvalidDatesForTransaction(400,
 					"The transactionFromDateTime and transactionToDateTime must not be more than 90 days.");
 
-		AccountEntity entity = AccountEntity.builder().expirationDateTime(request.getExpirationDateTime())
-				.transactionFromDateTime(request.getTransactionFromDateTime())
-				.transactionToDateTime(request.getTransactionToDateTime()).creationDateTime(new Date())
-				.expirationDateTime(request.getExpirationDateTime())
-				.permissions(mapPermissionRequestToModel(request.getPermissions()))
-				.status(com.psd2.openbank.account.entity.AccountStatus.valueOf("AWAITING_AUTHORISATION")).build();
+		AccountEntity entity = new AccountEntity();
+		entity.setExpirationDateTime(request.getExpirationDateTime());
+		entity.setTransactionFromDateTime(request.getTransactionFromDateTime());
+		entity.setTransactionToDateTime(request.getTransactionToDateTime());
+		entity.setCreationDateTime(new Date());
+		entity.setExpirationDateTime(request.getExpirationDateTime());
+		entity.setPermissions(mapPermissionRequestToModel(request.getPermissions()));
+		entity.setStatus(com.psd2.openbank.account.entity.AccountStatus.AWAITING_AUTHORISATION);
 
-		log.debug("AccountEntity before persist {} ", entity);
+		// log.debug("AccountEntity before persist {} ", entity);
 		AccountEntity accountEntity = accountRepository.save(entity);
-		log.debug("AccountEntity after persist {} ", accountEntity);
-		return AccountResponse.builder().accountRequestId(accountEntity.getAccountRequestId() + "")
-				.creationDateTime(accountEntity.getCreationDateTime())
-				.expirationDateTime(accountEntity.getExpirationDateTime())
-				.transactionFromDateTime(accountEntity.getTransactionFromDateTime())
-				.transactionToDateTime(accountEntity.getTransactionToDateTime())
-				.status(AccountStatus.AWAITING_AUTHORISATION)
-				.permissions(mapAccountPermissionModelToResponse(accountEntity.getPermissions())).build();
+		// log.debug("AccountEntity after persist {} ", accountEntity);
+		AccountResponse response = new AccountResponse();
+		response.setAccountRequestId(accountEntity.getAccountRequestId() + "");
+		response.setCreationDateTime(accountEntity.getCreationDateTime());
+		response.setExpirationDateTime(accountEntity.getExpirationDateTime());
+		response.setTransactionFromDateTime(accountEntity.getTransactionFromDateTime());
+		response.setTransactionToDateTime(accountEntity.getTransactionToDateTime());
+		response.setStatus(AccountStatus.AWAITING_AUTHORISATION);
+		response.setPermissions(mapAccountPermissionModelToResponse(accountEntity.getPermissions()));
+		return response;
 	}
 
 	/**

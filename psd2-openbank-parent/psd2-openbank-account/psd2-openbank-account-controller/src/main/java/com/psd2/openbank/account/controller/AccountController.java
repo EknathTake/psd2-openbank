@@ -16,6 +16,9 @@ import com.psd2.openbank.account.controller.response.AccountResponse;
 import com.psd2.openbank.account.exception.InvalidDatesForTransaction;
 import com.psd2.openbank.account.service.AccountService;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -38,6 +41,10 @@ public class AccountController {
 	 */
 	@PostMapping(path = "/retailbanking/v2.0/account-requests", consumes = "application/json")
 	@ResponseStatus(code = HttpStatus.CREATED)
+	@ApiOperation(value = "Authenticated User Login", response = AccountRequest.class)
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Success", response = AccountRequest.class),
+			@ApiResponse(code = 401, message = "Unauthorized"), @ApiResponse(code = 403, message = "Forbidden"),
+			@ApiResponse(code = 404, message = "Not Found"), @ApiResponse(code = 500, message = "Failure") })
 	public AccountResponse createAccount(@Valid @RequestBody AccountRequest request) throws InvalidDatesForTransaction {
 
 		AccountResponse accountServiceResponse = accountService.createAccount(request);
